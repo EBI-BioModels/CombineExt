@@ -4,7 +4,7 @@
 	<groupId>de.uni-rostock.sbi</groupId>
 	<artifactId>CombineExt</artifactId>
 	<packaging>jar</packaging>
-	<version>1.3.0</version>
+	<version>1.3.1</version>
 	<name>CombineExt</name>
 	<description>Extensions for COMBINE projects</description>
 	<url>https://semsproject.github.io/CombineExt/</url>
