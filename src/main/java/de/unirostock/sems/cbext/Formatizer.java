@@ -190,7 +190,7 @@ public class Formatizer
 				if (ext.equals ("sbml") || ext.equals ("sedml")
 					|| ext.equals ("sed-ml") || ext.equals ("sbgn")
 					|| ext.equals ("omex") || ext.equals ("cellml")
-					|| ext.equals ("biopax"))
+					|| ext.equals ("biopax") || ext.equals ("xml"))
 					return getFormatFromExtension (ext);
 			}
 			
