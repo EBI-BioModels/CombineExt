@@ -84,11 +84,6 @@ public class BioPaxRecognizer
 	@Override
 	public URI getFormatByParsing (File file, String mimeType)
 	{
-		
-		// mime type check
-		if (mimeType == null || mimeType.equals ("application/rdf+xml") == false)
-			return null;
-		
 		try
 		{
 			BioPAXIOHandler handler = new org.biopax.paxtools.io.SimpleIOHandler (); // auto-detects

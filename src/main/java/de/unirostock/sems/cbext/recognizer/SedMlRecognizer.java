@@ -86,10 +86,6 @@ public class SedMlRecognizer
 	public URI getFormatByParsing (File file, String mimeType)
 	{
 		
-		// mime type check
-		if (mimeType == null || mimeType.equals ("application/xml") == false)
-			return null;
-		
 		try
 		{
 			SEDMLDocument doc = Libsedml.readDocument (file);

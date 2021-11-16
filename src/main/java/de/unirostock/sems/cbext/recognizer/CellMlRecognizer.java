@@ -81,11 +81,6 @@ public class CellMlRecognizer
 	@Override
 	public URI getFormatByParsing (File file, String mimeType)
 	{
-		
-		// mime type check
-		if (mimeType == null || mimeType.equals ("application/xml") == false)
-			return null;
-		
 		try
 		{
 			CellMLValidator validator = new CellMLValidator ();

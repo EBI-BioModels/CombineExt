@@ -80,26 +80,16 @@ public class SbmlRecognizer
 	 * java.lang.String)
 	 */
 	@Override
-	public URI getFormatByParsing (File file, String mimeType)
-	{
-		
-		// mime type check
-		if (mimeType == null || mimeType.equals ("application/xml") == false)
-			return null;
-		
-		try
-		{
+	public URI getFormatByParsing (File file, String mimeType) {
+		URI result = null;
+		try {
 			SBMLDocument doc = SBMLReader.read (file);
-			return buildUri (IDENTIFIERS_BASE, "sbml.level-" + doc.getLevel ()
-				+ ".version-" + doc.getVersion ());
+			result = buildUri(IDENTIFIERS_BASE, "sbml.level-" + doc.getLevel() + ".version-" + doc.getVersion());
+		} catch (Exception e) {
+			LOGGER.info (e, "file ", file, " seems to be a valid SBML document.");
 		}
-		catch (Exception e)
-		{
-			LOGGER.info (e, "file ", file, " seems to be no sbml file..");
-		}
-		
-		// no format could be guessed
-		return null;
+
+		return result;
 	}
 	
 	

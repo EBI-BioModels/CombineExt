@@ -83,15 +83,8 @@ public class SbgnRecognizer
 	 * java.lang.String)
 	 */
 	@Override
-	public URI getFormatByParsing (File file, String mimeType)
-	{
-		
-		// mime type check
-		if (mimeType == null || mimeType.equals ("application/xml") == false)
-			return null;
-		
-		try
-		{
+	public URI getFormatByParsing (File file, String mimeType) {
+		try {
 			if (!SbgnUtil.isValid (file))
 				throw new IOException ("error parsing sbgn doc");
 			return buildUri (IDENTIFIERS_BASE, "sbgn");
