@@ -9,19 +9,19 @@
 	<description>Extensions for COMBINE projects</description>
 	<url>https://semsproject.github.io/CombineExt/</url>
 	<organization>
-		<name>SEMS project @ University of Rostock</name>
-		<url>https://sems.uni-rostock.de</url>
+		<name>BioModels - Molecular Networks team @ EMBL-EBI (European Bioinformatics Institute)</name>
+		<url>https://wwww.ebi.ac.uk/biomodels</url>
 	</organization>
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License (GPL)</name>
-			<url>http://www.gnu.org/licenses/lgpl.txt</url>
+			<url>https://www.gnu.org/licenses/lgpl.txt</url>
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/binfalse/CombineExt</url>
-		<connection>https://github.com/binfalse/CombineExt.git</connection>
-		<developerConnection>scm:git:ssh://github.com:binfalse/CombineExt.git</developerConnection>
+		<url>https://github.com/EBI-BioModels/CombineExt</url>
+		<connection>https://github.com/EBI-BioModels/CombineExt.git</connection>
+		<developerConnection>scm:git@github.com:EBI-BioModels/CombineExt.git</developerConnection>
 	</scm>
 	<developers>
 		<developer>
@@ -29,7 +29,7 @@
 			<id>martin</id>
 			<email>martin@binfalse.de</email>
 			<organization>SEMS project @ University of Rostock</organization>
-			<organizationUrl>http://sems.uni-rostock.de</organizationUrl>
+			<organizationUrl>https://sems.uni-rostock.de</organizationUrl>
 			<roles>
 				<role>Java Developer</role>
 			</roles>
@@ -40,6 +40,15 @@
 			<email>martin@freakybytes.net</email>
 			<roles>
 				<role>Java Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Tung Nguyen</name>
+			<id>ntung</id>
+			<email>nvntung@gmail.com</email>
+			<roles>
+				<role>Java Developer</role>
+				<role>Senior Software Engineer</role>
 			</roles>
 		</developer>
 	</developers>
@@ -97,14 +106,16 @@
 		</dependency>
 	</dependencies>
 	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
 		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<id>ebi-release</id>
+			<name>EBI Maven Release repository</name>
+			<url>scp://login.ebi.ac.uk/homes/maven/public_html/m2repo</url>
 		</repository>
+		<snapshotRepository>
+			<id>ebi-snapshot</id>
+			<name>EBI Maven Snapshot repository</name>
+			<url>scp://login.ebi.ac.uk/homes/maven/public_html/m2repo_snapshots</url>
+		</snapshotRepository>
 	</distributionManagement>
 	<build>
 		<plugins>
