@@ -167,9 +167,9 @@ public class Formatizer
 		}
 		
 		URI format = null;
-		for (FormatRecognizer recognizer : recognizerList)
-		{
-			if ( (format = recognizer.getFormatByParsing (file, mime)) != null)
+		for (FormatRecognizer recognizer : recognizerList) {
+			format = recognizer.getFormatByParsing(file, mime);
+			if (format != null)
 				break;
 		}
 		
