@@ -157,7 +157,7 @@ public class TestStuff {
       assertEquals("generic icon has unexpected size", 1487, noOfBytes);
 
       // test icon for unknown uri
-      fin = Iconizer.formatToIconStream(FormatRecognizer.buildUri("http://",
+      fin = Iconizer.formatToIconStream(FormatRecognizer.buildUri("https://",
               "binfalse.de"));
       bytes = new byte[1024];
       noOfBytes = 0;
@@ -194,15 +194,15 @@ public class TestStuff {
       assertNull("expected null for a non-file",
               Formatizer.guessFormat(new File("non ex ist ing")));
       assertEquals("expected cellml format for a cellml file",
-              "http://identifiers.org/combine.specifications/cellml", Formatizer
+              "https://identifiers.org/combine.specifications/cellml", Formatizer
                       .guessFormat(new File("test/aguda_b_1999.cellml")).toString());
       assertEquals("expected biopax format for a file with biopax extension",
-              "http://identifiers.org/combine.specifications/biopax", Formatizer
+              "https://identifiers.org/combine.specifications/biopax", Formatizer
                       .guessFormat(new File("test/aguda_b_1999-invalid.biopax"))
                       .toString());
       assertEquals(
               "expected plaintext format for a plain text file w/o extension",
-              "http://purl.org/NET/mediatypes/text/plain",
+              "https://purl.org/NET/mediatypes/text/plain",
               Formatizer.guessFormat(new File("test/plaintext")).toString());
 
       assertEquals("expected generic format for null ext",
