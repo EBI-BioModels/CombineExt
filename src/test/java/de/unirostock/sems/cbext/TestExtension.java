@@ -102,62 +102,59 @@ public class TestExtension {
       final URI low = FormatRecognizer.buildUri("https://", "lower.priority");
       final URI high = FormatRecognizer.buildUri("https://", "higher.priority");
 
-      FormatRecognizer lowRecognizer = new       class FormatRecognizerTmp
-              extends FormatRecognizer {
-
+      FormatRecognizer lowRecognizer = new FormatRecognizer() {
          public int priority = 201;
-
 
          @Override
          public int getPriority() {
             return priority;
          }
 
-
          @Override
          public URI getFormatByParsing(File file, String mimeType) {
             return high;
          }
-
 
          @Override
          public URI getFormatFromMime(String mime) {
             return high;
          }
 
-
          @Override
          public URI getFormatFromExtension(String extension) {
             return high;
          }
-      }
+      };
 
-		FormatRecognizer() {
+      class FormatRecognizerTmp extends FormatRecognizer {
+         public int priority;
 
          @Override
          public int getPriority() {
-            return 200;
+            return priority;
          }
 
+         public void setPriority(final int priority) {
+            this.priority = priority;
+         }
 
          @Override
          public URI getFormatByParsing(File file, String mimeType) {
             return low;
          }
 
-
          @Override
          public URI getFormatFromMime(String mime) {
             return low;
          }
-
 
          @Override
          public URI getFormatFromExtension(String extension) {
             return low;
          }
       }
-		FormatRecognizerTmp highRecognizer = new FormatRecognizerTmp();
+
+      FormatRecognizerTmp highRecognizer = new FormatRecognizerTmp();
       File f = new File("test/BIOMD0000000459.xml");
 
       Formatizer.removeRecognizers();
@@ -188,7 +185,7 @@ public class TestExtension {
               high, Formatizer.guessFormat(f));
 
       // now change priority
-      highRecognizer.priority = 50;
+      highRecognizer.setPriority(50);
 
       // test again, this time it should correctly be incorrect
       assertEquals(
