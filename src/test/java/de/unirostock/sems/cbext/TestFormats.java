@@ -55,7 +55,7 @@ public class TestFormats
 		try
 		{
 			assertEquals ("omex uri is incorrect", new URI (
-				"http://identifiers.org/combine.specifications/omex"),
+							"https://identifiers.org/combine.specifications/omex"),
 				Formatizer.getFormatFromExtension ("omex"));
 		}
 		catch (URISyntaxException e)
@@ -76,7 +76,7 @@ public class TestFormats
 		try
 		{
 			format = new URI (
-				"http://identifiers.org/combine.specifications/sbml.level-1.version-1");
+					"https://identifiers.org/combine.specifications/sbml.level-1.version-1");
 		}
 		catch (URISyntaxException e)
 		{
@@ -118,10 +118,10 @@ public class TestFormats
 		{
 			assertEquals ("expected generic icon for bullshit format",
 				Iconizer.GENERIC_UNKNOWN,
-				Iconizer.formatToIcon (new URI ("http://identifiers.org/bull/shit")));
+				Iconizer.formatToIcon (new URI ("https://identifiers.org/bull/shit")));
 			assertEquals ("expected generic icon for bullshit format",
 				Iconizer.class.getResource ("/icons/" + Iconizer.GENERIC_UNKNOWN),
-				Iconizer.formatToIconUrl (new URI ("http://identifiers.org/bull/shit")));
+				Iconizer.formatToIconUrl (new URI ("https://identifiers.org/bull/shit")));
 		}
 		catch (URISyntaxException e)
 		{
@@ -138,51 +138,51 @@ public class TestFormats
 	public void testFormatize ()
 	{
 		checkFormat (new File ("test/aguda_b_1999.cellml"),
-			"http://identifiers.org/combine.specifications/cellml",
-			"http://identifiers.org/combine.specifications/cellml",
-			"http://purl.org/NET/mediatypes/application/xml");
+			"https://identifiers.org/combine.specifications/cellml",
+			"https://identifiers.org/combine.specifications/cellml",
+			"https://purl.org/NET/mediatypes/application/xml");
 		
 		checkFormat (new File ("test/aguda_b_1999.cellml.wrong.ext"),
-			"http://identifiers.org/combine.specifications/cellml",
-			"http://purl.org/NET/mediatypes/application/x.unknown",
-			"http://purl.org/NET/mediatypes/application/xml");
+			"https://identifiers.org/combine.specifications/cellml",
+			"https://purl.org/NET/mediatypes/application/x.unknown",
+			"https://purl.org/NET/mediatypes/application/xml");
 		
 		checkFormat (new File ("test/BIOMD0000000459.xml"),
-			"http://identifiers.org/combine.specifications/sbml.level-2.version-4",
-			"http://purl.org/NET/mediatypes/application/xml",
-			"http://purl.org/NET/mediatypes/application/xml");
+			"https://identifiers.org/combine.specifications/sbml.level-2.version-4",
+			"https://purl.org/NET/mediatypes/application/xml",
+			"https://purl.org/NET/mediatypes/application/xml");
 		
 		checkFormat (new File ("test/BIOMD0000000459-SEDML.xml"),
-			"http://identifiers.org/combine.specifications/sed-ml.level-1.version-1",
-			"http://purl.org/NET/mediatypes/application/xml",
-			"http://purl.org/NET/mediatypes/application/xml");
+			"https://identifiers.org/combine.specifications/sed-ml.level-1.version-1",
+			"https://purl.org/NET/mediatypes/application/xml",
+			"https://purl.org/NET/mediatypes/application/xml");
 		
 		checkFormat (
 			new File (
 				"test/guess-biopax-paxtools-core-src-main-resources-org-biopax-paxtools-model-biopax-level3.owl"),
-			"http://identifiers.org/combine.specifications/biopax",
-			"http://purl.org/NET/mediatypes/application/x.unknown",
-			"http://purl.org/NET/mediatypes/application/rdf+xml");
+			"https://identifiers.org/combine.specifications/biopax",
+			"https://purl.org/NET/mediatypes/application/x.unknown",
+			"https://purl.org/NET/mediatypes/application/rdf+xml");
 		
 		checkFormat (new File ("test/guess-SBOLj-examples-data-BBa_I0462.xml"),
-			"http://identifiers.org/combine.specifications/sbol",
-			"http://purl.org/NET/mediatypes/application/xml",
-			"http://purl.org/NET/mediatypes/application/xml");
+			"https://identifiers.org/combine.specifications/sbol",
+			"https://purl.org/NET/mediatypes/application/xml",
+			"https://purl.org/NET/mediatypes/application/xml");
 		
 		checkFormat (new File ("test/some.xml"),
-			"http://purl.org/NET/mediatypes/application/xml",
-			"http://purl.org/NET/mediatypes/application/xml",
-			"http://purl.org/NET/mediatypes/application/xml");
+			"https://purl.org/NET/mediatypes/application/xml",
+			"https://purl.org/NET/mediatypes/application/xml",
+			"https://purl.org/NET/mediatypes/application/xml");
 		
 		checkFormat (new File ("test/some.rdf"),
-			"http://purl.org/NET/mediatypes/application/rdf+xml",
-			"http://purl.org/NET/mediatypes/application/x.unknown",
-			"http://purl.org/NET/mediatypes/application/rdf+xml");
+			"https://purl.org/NET/mediatypes/application/rdf+xml",
+			"https://purl.org/NET/mediatypes/application/x.unknown",
+			"https://purl.org/NET/mediatypes/application/rdf+xml");
 		
 		checkFormat (new File ("test/plain.text"),
-			"http://purl.org/NET/mediatypes/text/plain",
-			"http://purl.org/NET/mediatypes/application/x.unknown",
-			"http://purl.org/NET/mediatypes/text/plain");
+			"https://purl.org/NET/mediatypes/text/plain",
+			"https://purl.org/NET/mediatypes/application/x.unknown",
+			"https://purl.org/NET/mediatypes/text/plain");
 	}
 	
 	

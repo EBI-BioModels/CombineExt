@@ -58,7 +58,7 @@ public class TestExtension
 		File f = new File ("test/BIOMD0000000459.xml");
 		URI format = Formatizer.guessFormat (f);
 		assertEquals ("Did not get dummy format from TestFormatParser",
-			"http://example.org/spec/dummy", format.toString ());
+				"https://example.org/spec/dummy", format.toString ());
 		
 		Formatizer.removeRecognizers ();
 		Formatizer.addDefaultRecognizers ();
@@ -77,7 +77,7 @@ public class TestExtension
 		
 		URI format = Formatizer.getFormatFromExtension ("txt");
 		assertEquals ("Did not get dummy format for txt extension",
-			"http://example.org/spec/text", format.toString ());
+			"https://example.org/spec/text", format.toString ());
 		
 		Formatizer.removeRecognizers ();
 		Formatizer.addDefaultRecognizers ();
@@ -96,7 +96,7 @@ public class TestExtension
 		
 		URI format = Formatizer.getFormatFromMime ("text/plain");
 		assertEquals ("Did not get dummy format for txt mime type",
-			"http://example.org/spec/text", format.toString ());
+			"https://example.org/spec/text", format.toString ());
 		
 		Formatizer.removeRecognizers ();
 		Formatizer.addDefaultRecognizers ();
@@ -109,8 +109,8 @@ public class TestExtension
 	@Test
 	public void testPriorities ()
 	{
-		final URI low = FormatRecognizer.buildUri ("http://", "lower.priority");
-		final URI high = FormatRecognizer.buildUri ("http://", "higher.priority");
+		final URI low = FormatRecognizer.buildUri ("https://", "lower.priority");
+		final URI high = FormatRecognizer.buildUri ("https://", "higher.priority");
 		
 		FormatRecognizer lowRecognizer = new FormatRecognizer ()
 		{
@@ -264,49 +264,49 @@ public class TestExtension
 		Iconizer.addIconCollection (tim);
 		
 		assertTrue ("test icon mapper has no icon for dummy format",
-			tim.hasIcon (new URI ("http://example.org/spec/dummy")));
+			tim.hasIcon (new URI ("https://example.org/spec/dummy")));
 		assertFalse ("test icon mapper has an icon for unknown format",
-			tim.hasIcon (new URI ("http://somet.hing")));
+			tim.hasIcon (new URI ("https://somet.hing")));
 		assertFalse (
 			"test icon mapper has an icon for sbml format",
 			tim
 				.hasIcon (new URI (
-					"http://identifiers.org/combine.specifications/sbml.level-2.version-4")));
+					"https://identifiers.org/combine.specifications/sbml.level-2.version-4")));
 		
 		assertEquals ("Did not get dummy icon name for dummy format", "test.png",
-			Iconizer.formatToIcon (new URI ("http://example.org/spec/dummy")));
+			Iconizer.formatToIcon (new URI ("https://example.org/spec/dummy")));
 		assertEquals ("Did not get default icon name for unknown format",
-			"Blue-unknown.png", Iconizer.formatToIcon (new URI ("http://somet.hing")));
+			"Blue-unknown.png", Iconizer.formatToIcon (new URI ("https://somet.hing")));
 		assertEquals (
 			"Did not get sbml icon name for sbml format",
 			"Blue-sbml.png",
 			Iconizer
 				.formatToIcon (new URI (
-					"http://identifiers.org/combine.specifications/sbml.level-2.version-4")));
+					"https://identifiers.org/combine.specifications/sbml.level-2.version-4")));
 		
 		assertTrue ("Did not get default icon url for dummy format", Iconizer
-			.formatToIconUrl (new URI ("http://example.org/spec/dummy")).toString ()
+			.formatToIconUrl (new URI ("https://example.org/spec/dummy")).toString ()
 			.endsWith ("Blue-unknown.png"));
 		assertTrue ("Did not get default icon url for unknown format",
-			Iconizer.formatToIconUrl (new URI ("http://somet.hing")).toString ()
+			Iconizer.formatToIconUrl (new URI ("https://somet.hing")).toString ()
 				.endsWith ("Blue-unknown.png"));
 		assertTrue (
 			"Did not get sbml icon url for sbml format",
 			Iconizer
 				.formatToIconUrl (
 					new URI (
-						"http://identifiers.org/combine.specifications/sbml.level-2.version-4"))
+						"https://identifiers.org/combine.specifications/sbml.level-2.version-4"))
 				.toString ().endsWith ("Blue-sbml.png"));
 		
 		assertNotNull ("did not expect null stream for dummy format",
-			Iconizer.formatToIconStream (new URI ("http://example.org/spec/dummy")));
+			Iconizer.formatToIconStream (new URI ("https://example.org/spec/dummy")));
 		assertNotNull ("did not expect null stream for unknown format",
-			Iconizer.formatToIconStream (new URI ("http://somet.hing")));
+			Iconizer.formatToIconStream (new URI ("https://somet.hing")));
 		assertNotNull (
 			"did not expect null stream for sbml format",
 			Iconizer
 				.formatToIconStream (new URI (
-					"http://identifiers.org/combine.specifications/sbml.level-2.version-4")));
+					"https://identifiers.org/combine.specifications/sbml.level-2.version-4")));
 		
 		Iconizer.removeCollections();
 		Iconizer.addDefaultCollection();
@@ -343,7 +343,7 @@ public class TestExtension
 			// always returns a dummy format
 			try
 			{
-				return new URI ("http://example.org/spec/dummy");
+				return new URI ("https://example.org/spec/dummy");
 			}
 			catch (URISyntaxException e)
 			{
@@ -367,7 +367,7 @@ public class TestExtension
 			{
 				try
 				{
-					return new URI ("http://example.org/spec/text");
+					return new URI ("https://example.org/spec/text");
 				}
 				catch (URISyntaxException e)
 				{
@@ -393,7 +393,7 @@ public class TestExtension
 			{
 				try
 				{
-					return new URI ("http://example.org/spec/text");
+					return new URI ("https://example.org/spec/text");
 				}
 				catch (URISyntaxException e)
 				{
@@ -455,7 +455,7 @@ public class TestExtension
 		@Override
 		public boolean hasIcon (URI format)
 		{
-			if (format.toString ().equals ("http://example.org/spec/dummy"))
+			if (format.toString ().equals ("https://example.org/spec/dummy"))
 				return true;
 			else
 				return false;
@@ -504,7 +504,7 @@ public class TestExtension
 		@Override
 		public String formatToIconName (URI format)
 		{
-			if (format.toString ().equals ("http://example.org/spec/dummy"))
+			if (format.toString ().equals ("https://example.org/spec/dummy"))
 				return "test.png";
 			else
 				return null;

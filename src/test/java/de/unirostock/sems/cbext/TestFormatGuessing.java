@@ -59,7 +59,7 @@ public class TestFormatGuessing
 	{
 		File f = new File ("test/BIOMD0000000459.xml");
 		String fn = f.getAbsolutePath ();
-		String correctFormat = "http://identifiers.org/combine.specifications/sbml.level-2.version-4";
+		String correctFormat = "https://identifiers.org/combine.specifications/sbml.level-2.version-4";
 		URI format = Formatizer.guessFormat (f);
 		assertEquals ("got wrong format for " + fn, correctFormat,
 			format.toString ());
@@ -90,8 +90,7 @@ public class TestFormatGuessing
 			recognizer.getFormatFromMime (null));
 		
 		assertEquals ("got wrong format for " + fn,
-			"http://identifiers.org/combine.specifications/sbml", recognizer
-				.getFormatFromExtension ("sbml").toString ());
+			"https://identifiers.org/combine.specifications/sbml", recognizer.getFormatFromExtension ("sbml").toString ());
 		assertNull ("got wrong format for " + fn,
 			recognizer.getFormatFromExtension (null));
 		assertNull ("got wrong format for " + fn,
@@ -107,7 +106,7 @@ public class TestFormatGuessing
 	{
 		File f = new File ("test/guess-SBOLj-examples-data-BBa_I0462.xml");
 		String fn = f.getAbsolutePath ();
-		String correctFormat = "http://identifiers.org/combine.specifications/sbol";
+		String correctFormat = "https://identifiers.org/combine.specifications/sbol";
 		URI format = Formatizer.guessFormat (f);
 		assertEquals ("got wrong format for " + fn, correctFormat,
 			format.toString ());
@@ -155,7 +154,7 @@ public class TestFormatGuessing
 		File f = new File (
 			"test/guess-biopax-paxtools-core-src-main-resources-org-biopax-paxtools-model-biopax-level3.owl");
 		String fn = f.getAbsolutePath ();
-		String correctFormat = "http://identifiers.org/combine.specifications/biopax";
+		String correctFormat = "https://identifiers.org/combine.specifications/biopax";
 		URI format = Formatizer.guessFormat (f);
 		assertEquals ("got wrong format for " + fn, correctFormat,
 			format.toString ());
@@ -202,7 +201,7 @@ public class TestFormatGuessing
 	{
 		File f = new File ("test/BIOMD0000000459-SEDML.xml");
 		String fn = f.getAbsolutePath ();
-		String correctFormat = "http://identifiers.org/combine.specifications/sed-ml.level-1.version-1";
+		String correctFormat = "https://identifiers.org/combine.specifications/sed-ml.level-1.version-1";
 		URI format = Formatizer.guessFormat (f);
 		assertEquals ("got wrong format for " + fn, correctFormat,
 			format.toString ());
@@ -234,7 +233,7 @@ public class TestFormatGuessing
 			recognizer.getFormatFromMime (null));
 		
 		assertEquals ("got wrong format for " + fn,
-			"http://identifiers.org/combine.specifications/sed-ml", recognizer
+				"https://identifiers.org/combine.specifications/sed-ml", recognizer
 				.getFormatFromExtension ("sedml").toString ());
 		assertNull ("got wrong format for " + fn,
 			recognizer.getFormatFromExtension (null));
@@ -251,7 +250,7 @@ public class TestFormatGuessing
 	{
 		File f = new File ("test/v3-example1-repeated-steady-scan-oscli.xml");
 		String fn = f.getAbsolutePath ();
-		String correctFormat = "http://identifiers.org/combine.specifications/sed-ml.level-1.version-2";
+		String correctFormat = "https://identifiers.org/combine.specifications/sed-ml.level-1.version-2";
 		URI format = Formatizer.guessFormat (f);
 		assertEquals ("got wrong format for " + fn, correctFormat,
 			format.toString ());
@@ -283,7 +282,7 @@ public class TestFormatGuessing
 			recognizer.getFormatFromMime (null));
 		
 		assertEquals ("got wrong format for " + fn,
-			"http://identifiers.org/combine.specifications/sed-ml", recognizer
+				"https://identifiers.org/combine.specifications/sed-ml", recognizer
 				.getFormatFromExtension ("sedml").toString ());
 		assertNull ("got wrong format for " + fn,
 			recognizer.getFormatFromExtension (null));
@@ -300,7 +299,7 @@ public class TestFormatGuessing
 	{
 		File f = new File ("test/aguda_b_1999.cellml");
 		String fn = f.getAbsolutePath ();
-		String correctFormat = "http://identifiers.org/combine.specifications/cellml";
+		String correctFormat = "https://identifiers.org/combine.specifications/cellml";
 		URI format = Formatizer.guessFormat (f);
 		assertEquals ("got wrong format for " + fn, correctFormat,
 			format.toString ());
@@ -347,7 +346,7 @@ public class TestFormatGuessing
 	{
 		File f = new File ("test/guess-sbgn-AF-activity-nodes.sbgn");
 		String fn = f.getAbsolutePath ();
-		String correctFormat = "http://identifiers.org/combine.specifications/sbgn";
+		String correctFormat = "https://identifiers.org/combine.specifications/sbgn";
 		URI format = Formatizer.guessFormat (f);
 		assertEquals ("got wrong format for " + fn, correctFormat,
 			format.toString ());
