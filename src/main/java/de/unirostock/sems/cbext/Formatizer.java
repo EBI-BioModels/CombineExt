@@ -164,19 +164,19 @@ public class Formatizer {
          int dot = name.lastIndexOf(".");
          if (dot > 0) {
             String ext = name.substring(dot + 1);
-            //System.out.println (ext);
             if (ext.equals("sbml") || ext.equals("sedml")
                     || ext.equals("sed-ml") || ext.equals("sbgn")
                     || ext.equals("omex") || ext.equals("cellml")
-                    || ext.equals("biopax") || ext.equals("xml"))
-               return getFormatFromExtension(ext);
+                    || ext.equals("biopax") || ext.equals("xml")) {
+               format = getFormatFromExtension(ext);
+            }
          }
-
+         if (null == format || format.equals(GENERIC_UNKNOWN)) {
+            // guessing via the file extension still failed, try to map mime-type
+            format = getFormatFromMime(mime);
+         }
+         return format;
       }
-
-      // parsing still failed, try to map mime-type
-      return getFormatFromMime(mime);
-
    }
 
 
