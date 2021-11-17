@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,7 +39,7 @@ import java.util.List;
  *
  * This class hosts a bunch of format recognizers (see {@link FormatRecognizer})
  * which are able to recognize files and provide format URIs.
- * By default we are able to recognize SED-ML, BioPax, CellML, SBML, and SBOL.
+ * By default, we are able to recognize SED-ML, BioPax, CellML, SBML, and SBOL.
  * You can extend the default list by passing further FormatRecognizers to
  * {@link #addFormatRecognizer (de.unirostock.sems.cbext.FormatRecognizer)}.
  *
@@ -138,9 +138,10 @@ public class Formatizer {
       if (file == null || !file.isFile())
          return null;
 
-      String mime = null;
+      String mime;
       try {
-         mime = Files.probeContentType(file.toPath());
+         URLConnection connection = file.toURI().toURL().openConnection();
+         mime = connection.getContentType();
       } catch (IOException e) {
          LOGGER.warn(e, "could not get mime from file " + file);
          return null;
