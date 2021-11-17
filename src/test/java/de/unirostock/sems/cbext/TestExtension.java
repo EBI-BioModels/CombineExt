@@ -103,7 +103,7 @@ public class TestExtension {
       final URI high = FormatRecognizer.buildUri("https://", "higher.priority");
 
       FormatRecognizer lowRecognizer = new FormatRecognizer() {
-         public int priority = 201;
+         public int priority = 200;
 
          @Override
          public int getPriority() {
@@ -112,22 +112,22 @@ public class TestExtension {
 
          @Override
          public URI getFormatByParsing(File file, String mimeType) {
-            return high;
+            return low;
          }
 
          @Override
          public URI getFormatFromMime(String mime) {
-            return high;
+            return low;
          }
 
          @Override
          public URI getFormatFromExtension(String extension) {
-            return high;
+            return low;
          }
       };
 
       class FormatRecognizerTmp extends FormatRecognizer {
-         public int priority;
+         public int priority = 201;
 
          @Override
          public int getPriority() {
@@ -140,17 +140,17 @@ public class TestExtension {
 
          @Override
          public URI getFormatByParsing(File file, String mimeType) {
-            return low;
+            return high;
          }
 
          @Override
          public URI getFormatFromMime(String mime) {
-            return low;
+            return high;
          }
 
          @Override
          public URI getFormatFromExtension(String extension) {
-            return low;
+            return high;
          }
       }
 
@@ -170,7 +170,7 @@ public class TestExtension {
       assertEquals("Did not get format of high priority recognizer by guessing",
               high, Formatizer.guessFormat(f));
 
-      // test again with submitting recognizers in other order
+      // test again with resubmitting recognizers in the other way round order
       Formatizer.removeRecognizers();
       Formatizer.addFormatRecognizer(lowRecognizer);
       Formatizer.addFormatRecognizer(highRecognizer);
@@ -181,26 +181,27 @@ public class TestExtension {
       assertEquals(
               "Did not get format of high priority recognizer for extension", high,
               Formatizer.getFormatFromExtension("who cares"));
-      assertEquals("Did not get format of high priority recognizer by guessing",
-              high, Formatizer.guessFormat(f));
+      assertEquals("Did not get format of high priority recognizer by guessing", high,
+              Formatizer.guessFormat(f));
 
-      // now change priority
+      // now change the priority of the high recognizer to make it lower than the low recognizer
       highRecognizer.setPriority(50);
 
-      // test again, this time it should correctly be incorrect
+      // test again, this time it should correctly be incorrect because the priority of the high recognizer has been
+      // set 50 less than 201 as the priority of the low recognizer
       assertEquals(
               "Did not get format of high priority recognizer for mime type", high,
               Formatizer.getFormatFromMime("who cares"));
       assertEquals(
               "Did not get format of high priority recognizer for extension", high,
               Formatizer.getFormatFromExtension("who cares"));
-      assertEquals("Did not get format of high priority recognizer by guessing",
-              high, Formatizer.guessFormat(f));
+      assertEquals("Did not get format of high priority recognizer by guessing", high,
+              Formatizer.guessFormat(f));
+
 
       // now resort the recognizers
       Formatizer.resortRecognizers();
-
-      // test again, this time it should be correct gain
+      // test again, this time it should be correct again
       assertEquals(
               "Did not get format of low priority recognizer for mime type", low,
               Formatizer.getFormatFromMime("who cares"));
@@ -221,7 +222,6 @@ public class TestExtension {
       SbmlRecognizer.setPriority(100);
       assertEquals("wrong priority for SbmlRecognizer", 100, new SbmlRecognizer().getPriority());
       assertEquals("wrong priority for SbolRecognizer", 100, new SbolRecognizer().getPriority());
-
    }
 
 
