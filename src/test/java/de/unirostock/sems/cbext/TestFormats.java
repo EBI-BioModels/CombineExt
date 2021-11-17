@@ -151,48 +151,48 @@ public class TestFormats {
       checkFormat(new File("test/aguda_b_1999.cellml"),
               "https://identifiers.org/combine.specifications/cellml",
               "https://identifiers.org/combine.specifications/cellml",
-              "https://purl.org/NET/mediatypes/application/xml");
+              "https://www.iana.org/assignments/media-types/application/xml");
 
       checkFormat(new File("test/aguda_b_1999.cellml.wrong.ext"),
               "https://identifiers.org/combine.specifications/cellml",
-              "https://purl.org/NET/mediatypes/application/x.unknown",
-              "https://purl.org/NET/mediatypes/application/xml");
+              "https://www.iana.org/assignments/media-types/application/x.unknown",
+              "https://www.iana.org/assignments/media-types/application/xml");
 
       checkFormat(new File("test/BIOMD0000000459.xml"),
               "https://identifiers.org/combine.specifications/sbml.level-2.version-4",
-              "https://purl.org/NET/mediatypes/application/xml",
-              "https://purl.org/NET/mediatypes/application/xml");
+              "https://www.iana.org/assignments/media-types/application/xml",
+              "https://www.iana.org/assignments/media-types/application/xml");
 
       checkFormat(new File("test/BIOMD0000000459-SEDML.xml"),
               "https://identifiers.org/combine.specifications/sed-ml.level-1.version-1",
-              "https://purl.org/NET/mediatypes/application/xml",
-              "https://purl.org/NET/mediatypes/application/xml");
+              "https://www.iana.org/assignments/media-types/application/xml",
+              "https://www.iana.org/assignments/media-types/application/xml");
 
       checkFormat(
               new File(
                       "test/guess-biopax-paxtools-core-src-main-resources-org-biopax-paxtools-model-biopax-level3.owl"),
               "https://identifiers.org/combine.specifications/biopax",
-              "https://purl.org/NET/mediatypes/application/x.unknown",
-              "https://purl.org/NET/mediatypes/application/rdf+xml");
+              "https://www.iana.org/assignments/media-types/application/x.unknown",
+              "https://www.iana.org/assignments/media-types/application/rdf+xml");
 
       checkFormat(new File("test/guess-SBOLj-examples-data-BBa_I0462.xml"),
               "https://identifiers.org/combine.specifications/sbol",
-              "https://purl.org/NET/mediatypes/application/xml",
-              "https://purl.org/NET/mediatypes/application/xml");
+              "https://www.iana.org/assignments/media-types/application/xml",
+              "https://www.iana.org/assignments/media-types/application/xml");
 
       checkFormat(new File("test/some.xml"),
-              "https://purl.org/NET/mediatypes/application/xml",
-              "https://purl.org/NET/mediatypes/application/xml",
-              "https://purl.org/NET/mediatypes/application/xml");
+              "https://www.iana.org/assignments/media-types/application/xml",
+              "https://www.iana.org/assignments/media-types/application/xml",
+              "https://www.iana.org/assignments/media-types/application/xml");
 
       checkFormat(new File("test/some.rdf"),
-              "https://purl.org/NET/mediatypes/application/rdf+xml",
-              "https://purl.org/NET/mediatypes/application/x.unknown",
-              "https://purl.org/NET/mediatypes/application/rdf+xml");
+              "https://www.iana.org/assignments/media-types/application/rdf+xml",
+              "https://www.iana.org/assignments/media-types/application/x.unknown",
+              "https://www.iana.org/assignments/media-types/application/rdf+xml");
 
       checkFormat(new File("test/plain.text"),
-              "https://purl.org/NET/mediatypes/text/plain",
-              "https://purl.org/NET/mediatypes/application/x.unknown",
-              "https://purl.org/NET/mediatypes/text/plain");
+              "https://www.iana.org/assignments/media-types/text/plain",
+              "https://www.iana.org/assignments/media-types/application/x.unknown",
+              "https://www.iana.org/assignments/media-types/text/plain");
    }
 }
