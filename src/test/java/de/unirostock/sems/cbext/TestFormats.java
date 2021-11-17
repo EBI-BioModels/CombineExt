@@ -29,7 +29,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
+import java.net.URLConnection;
 
 import static org.junit.Assert.*;
 
@@ -40,7 +40,6 @@ import static org.junit.Assert.*;
  * @author Martin Scharm
  */
 public class TestFormats {
-
    /**
     * Check format.
     *
@@ -55,28 +54,26 @@ public class TestFormats {
     */
    public static void checkFormat(File f, String expectedGuess,
                                   String expectedExt, String expectedMime) {
+      String absFilePath = f.getAbsolutePath();
       try {
          URI format = Formatizer.guessFormat(f);
-         assertEquals("got wrong format for guessing " + f.getAbsolutePath(),
-                 expectedGuess, format.toString());
+         assertEquals("got wrong format for guessing " + absFilePath, expectedGuess, format.toString());
 
-         format = Formatizer.getFormatFromMime(Files.probeContentType(f
-                 .toPath()));
-         assertEquals("got wrong format for mime of " + f.getAbsolutePath(),
-                 expectedMime, format.toString());
+         URLConnection connection = f.toURI().toURL().openConnection();
+         format = Formatizer.getFormatFromMime(connection.getContentType());
+         assertEquals("got wrong format for mime of " + absFilePath, expectedMime, format.toString());
 
-         format = Formatizer.getFormatFromExtension(f.getName().substring(
-                 f.getName().lastIndexOf(".") + 1));
-         assertEquals("got wrong format for ext of " + f.getAbsolutePath(),
-                 expectedExt, format.toString());
+         String fileExt = f.getName().substring(f.getName().lastIndexOf(".") + 1);
+         format = Formatizer.getFormatFromExtension(fileExt);
+         assertEquals("got wrong format for ext of " + absFilePath, expectedExt, format.toString());
       } catch (IOException e) {
          e.printStackTrace();
-         fail("couldn't test format for " + f.getAbsolutePath());
+         fail("couldn't test format for " + absFilePath);
       }
    }
 
    /**
-    * Test some stuff that definitely need to be corrent.
+    * Test some stuff that definitely need to be correct.
     */
    @Test
    public void testStatics() {
@@ -155,7 +152,7 @@ public class TestFormats {
 
       checkFormat(new File("test/aguda_b_1999.cellml.wrong.ext"),
               "https://identifiers.org/combine.specifications/cellml",
-              "https://www.iana.org/assignments/media-types/application/x.unknown",
+              Formatizer.GENERIC_UNKNOWN.toString(),
               "https://www.iana.org/assignments/media-types/application/xml");
 
       checkFormat(new File("test/BIOMD0000000459.xml"),
@@ -171,9 +168,9 @@ public class TestFormats {
       checkFormat(
               new File(
                       "test/guess-biopax-paxtools-core-src-main-resources-org-biopax-paxtools-model-biopax-level3.owl"),
-              "https://identifiers.org/combine.specifications/biopax",
-              "https://www.iana.org/assignments/media-types/application/x.unknown",
-              "https://www.iana.org/assignments/media-types/application/rdf+xml");
+              "https://identifiers.org/combine.specifications/biopax.level-3",
+              Formatizer.GENERIC_UNKNOWN.toString(),
+              "https://www.iana.org/assignments/media-types/application/xml");
 
       checkFormat(new File("test/guess-SBOLj-examples-data-BBa_I0462.xml"),
               "https://identifiers.org/combine.specifications/sbol",
@@ -186,13 +183,13 @@ public class TestFormats {
               "https://www.iana.org/assignments/media-types/application/xml");
 
       checkFormat(new File("test/some.rdf"),
-              "https://www.iana.org/assignments/media-types/application/rdf+xml",
-              "https://www.iana.org/assignments/media-types/application/x.unknown",
-              "https://www.iana.org/assignments/media-types/application/rdf+xml");
+              "https://www.iana.org/assignments/media-types/application/xml",
+              Formatizer.GENERIC_UNKNOWN.toString(),
+              "https://www.iana.org/assignments/media-types/application/xml");
 
       checkFormat(new File("test/plain.text"),
               "https://www.iana.org/assignments/media-types/text/plain",
-              "https://www.iana.org/assignments/media-types/application/x.unknown",
+              Formatizer.GENERIC_UNKNOWN.toString(),
               "https://www.iana.org/assignments/media-types/text/plain");
    }
 }
