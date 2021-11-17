@@ -87,9 +87,9 @@ public class BioPaxRecognizer
                  .convertFromOWL(new FileInputStream(file));
          BioPAXLevel bioPAXLevel = model.getLevel();
          String level = "";
-         if (bioPAXLevel.getPackageName() != null || bioPAXLevel.getPackageName() != "") {
-            String[] tokenizedPN  = bioPAXLevel.getPackageName().split("\\.");
-            level = tokenizedPN.length > 0 ? "." + tokenizedPN[tokenizedPN.length - 1] : "";
+         if (bioPAXLevel.name() != null || bioPAXLevel.name() != "") {
+            String d = bioPAXLevel.name().substring(1);
+            level = ".level-".concat(d);
          }
          return buildUri(IDENTIFIERS_BASE, "biopax" + level);
       } catch (IOException | BioPaxIOException e) {
