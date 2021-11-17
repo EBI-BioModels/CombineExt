@@ -21,7 +21,10 @@
 package de.unirostock.sems.cbext;
 
 import de.binfalse.bflog.LOGGER;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,21 +42,19 @@ import static org.junit.Assert.*;
  *
  * @author Martin Scharm
  */
+@RunWith(JUnitParamsRunner.class)
 public class TestFormats {
    /**
     * Check format.
     *
-    * @param f
-    *          the file
-    * @param expectedGuess
-    *          the expected format by guess
-    * @param expectedExt
-    *          the expected format from the extension
-    * @param expectedMime
-    *          the expected format from the mime
+    * @param file          the file
+    * @param expectedGuess the expected format by guess
+    * @param expectedExt   the expected format from the extension
+    * @param expectedMime  the expected format from the mime
     */
-   public static void checkFormat(File f, String expectedGuess,
+   public static void checkFormat(String file, String expectedGuess,
                                   String expectedExt, String expectedMime) {
+      File f = new File(file);
       String absFilePath = f.getAbsolutePath();
       try {
          URI format = Formatizer.guessFormat(f);
@@ -89,6 +90,7 @@ public class TestFormats {
    }
 
    /**
+    *
     */
    @Test
    public void testIconize() {
@@ -144,52 +146,56 @@ public class TestFormats {
     *
     */
    @Test
-   public void testFormatize() {
-      checkFormat(new File("test/aguda_b_1999.cellml"),
-              "https://identifiers.org/combine.specifications/cellml",
-              "https://identifiers.org/combine.specifications/cellml",
-              "https://www.iana.org/assignments/media-types/application/xml");
+   @Parameters(method = "params2TestFormatize")
+   public void testFormatize(String file, String expectedGuess, String expectedExt, String expectedMime) {
+      checkFormat(file, expectedGuess, expectedExt, expectedMime);
+   }
 
-      checkFormat(new File("test/aguda_b_1999.cellml.wrong.ext"),
-              "https://identifiers.org/combine.specifications/cellml",
-              Formatizer.GENERIC_UNKNOWN.toString(),
-              "https://www.iana.org/assignments/media-types/application/xml");
+   private Object[] params2TestFormatize() {
+      return new Object[]{
+              new Object[]{
+                      "test/aguda_b_1999.cellml",
+                      "https://identifiers.org/combine.specifications/cellml",
+                      "https://identifiers.org/combine.specifications/cellml",
+                      "https://www.iana.org/assignments/media-types/application/xml"
 
-      checkFormat(new File("test/BIOMD0000000459.xml"),
-              "https://identifiers.org/combine.specifications/sbml.level-2.version-4",
-              "https://www.iana.org/assignments/media-types/application/xml",
-              "https://www.iana.org/assignments/media-types/application/xml");
-
-      checkFormat(new File("test/BIOMD0000000459-SEDML.xml"),
-              "https://identifiers.org/combine.specifications/sed-ml.level-1.version-1",
-              "https://www.iana.org/assignments/media-types/application/xml",
-              "https://www.iana.org/assignments/media-types/application/xml");
-
-      checkFormat(
-              new File(
-                      "test/guess-biopax-paxtools-core-src-main-resources-org-biopax-paxtools-model-biopax-level3.owl"),
-              "https://identifiers.org/combine.specifications/biopax.level-3",
-              Formatizer.GENERIC_UNKNOWN.toString(),
-              "https://www.iana.org/assignments/media-types/application/xml");
-
-      checkFormat(new File("test/guess-SBOLj-examples-data-BBa_I0462.xml"),
-              "https://identifiers.org/combine.specifications/sbol",
-              "https://www.iana.org/assignments/media-types/application/xml",
-              "https://www.iana.org/assignments/media-types/application/xml");
-
-      checkFormat(new File("test/some.xml"),
-              "https://www.iana.org/assignments/media-types/application/xml",
-              "https://www.iana.org/assignments/media-types/application/xml",
-              "https://www.iana.org/assignments/media-types/application/xml");
-
-      checkFormat(new File("test/some.rdf"),
-              "https://www.iana.org/assignments/media-types/application/xml",
-              Formatizer.GENERIC_UNKNOWN.toString(),
-              "https://www.iana.org/assignments/media-types/application/xml");
-
-      checkFormat(new File("test/plain.text"),
-              "https://www.iana.org/assignments/media-types/text/plain",
-              Formatizer.GENERIC_UNKNOWN.toString(),
-              "https://www.iana.org/assignments/media-types/text/plain");
+              },
+              new Object[]{
+                      "test/aguda_b_1999.cellml.wrong.ext",
+                      "https://identifiers.org/combine.specifications/cellml",
+                      Formatizer.GENERIC_UNKNOWN.toString(),
+                      "https://www.iana.org/assignments/media-types/application/xml"
+              },
+              new Object[]{
+                      "test/guess-biopax-paxtools-core-src-main-resources-org-biopax-paxtools-model-biopax-level3.owl",
+                      "https://identifiers.org/combine.specifications/biopax.level-3",
+                      Formatizer.GENERIC_UNKNOWN.toString(),
+                      "https://www.iana.org/assignments/media-types/application/xml"
+              },
+              new Object[]{
+                      "test/guess-SBOLj-examples-data-BBa_I0462.xml",
+                      "https://identifiers.org/combine.specifications/sbol",
+                      "https://www.iana.org/assignments/media-types/application/xml",
+                      "https://www.iana.org/assignments/media-types/application/xml"
+              },
+              new Object[]{
+                      "test/some.xml",
+                      "https://www.iana.org/assignments/media-types/application/xml",
+                      "https://www.iana.org/assignments/media-types/application/xml",
+                      "https://www.iana.org/assignments/media-types/application/xml"
+              },
+              new Object[]{
+                      "test/some.rdf",
+                      "https://www.iana.org/assignments/media-types/application/xml",
+                      Formatizer.GENERIC_UNKNOWN.toString(),
+                      "https://www.iana.org/assignments/media-types/application/xml"
+              },
+              new Object[]{
+                      "test/plain.text",
+                      "https://www.iana.org/assignments/media-types/text/plain",
+                      Formatizer.GENERIC_UNKNOWN.toString(),
+                      "https://www.iana.org/assignments/media-types/text/plain"
+              }
+      };
    }
 }
