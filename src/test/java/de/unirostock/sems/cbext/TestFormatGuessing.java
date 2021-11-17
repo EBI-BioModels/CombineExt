@@ -135,7 +135,7 @@ public class TestFormatGuessing {
       File f = new File(
               "test/guess-biopax-paxtools-core-src-main-resources-org-biopax-paxtools-model-biopax-level3.owl");
       String fn = f.getAbsolutePath();
-      String correctFormat = "https://identifiers.org/combine.specifications/biopax";
+      String correctFormat = "https://identifiers.org/combine.specifications/biopax.level3";
       URI format = Formatizer.guessFormat(f);
       assertEquals("got wrong format for " + fn, correctFormat,
               format.toString());
@@ -162,6 +162,7 @@ public class TestFormatGuessing {
       assertNull("got wrong format for " + fn,
               recognizer.getFormatFromMime(null));
 
+      correctFormat = "https://identifiers.org/combine.specifications/biopax";
       assertEquals("got wrong format for " + fn, correctFormat, recognizer
               .getFormatFromExtension("biopax").toString());
       assertNull("got wrong format for " + fn,

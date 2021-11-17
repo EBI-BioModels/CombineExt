@@ -24,6 +24,7 @@ import de.binfalse.bflog.LOGGER;
 import de.unirostock.sems.cbext.FormatRecognizer;
 import de.unirostock.sems.cbext.Formatizer;
 import org.biopax.paxtools.io.BioPAXIOHandler;
+import org.biopax.paxtools.model.BioPAXLevel;
 import org.biopax.paxtools.util.BioPaxIOException;
 
 import java.io.File;
@@ -84,10 +85,15 @@ public class BioPaxRecognizer
          // Level
          org.biopax.paxtools.model.Model model = handler
                  .convertFromOWL(new FileInputStream(file));
-
-         return buildUri(IDENTIFIERS_BASE, "biopax");
+         BioPAXLevel bioPAXLevel = model.getLevel();
+         String level = "";
+         if (bioPAXLevel.getPackageName() != null || bioPAXLevel.getPackageName() != "") {
+            String[] tokenizedPN  = bioPAXLevel.getPackageName().split("\\.");
+            level = tokenizedPN.length > 0 ? "." + tokenizedPN[tokenizedPN.length - 1] : "";
+         }
+         return buildUri(IDENTIFIERS_BASE, "biopax" + level);
       } catch (IOException | BioPaxIOException e) {
-         LOGGER.info(e, "file ", file, " seems to be no biopax file..");
+         LOGGER.info(e, "file ", file, " seems not to be a valid BioPAX document.");
       }
 
       // no format could be guessed
