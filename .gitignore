@@ -4,7 +4,9 @@ bin
 dist
 testfiles
 lib
+.idea
 .project
 .classpath
 .settings/*
 *.log
+*.iml
