@@ -189,7 +189,8 @@ public class Iconizer {
 
       System.out.println("icon name: " + iconName);
 
-      File expectedFile = new File("/tmp/" + iconName);
+      String tmpDir = System.getProperty("java.io.tmpdir");
+      File expectedFile = new File(tmpDir + iconName);
 
       if (!expectedFile.exists()) {
          // extract the file
