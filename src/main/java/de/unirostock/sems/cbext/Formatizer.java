@@ -57,10 +57,10 @@ public class Formatizer {
 
    /** list of registered format recognizers. */
    private static final List<FormatRecognizer> recognizerList = new ArrayList<>();
-   public static final String IANA_ORG_PREFIX = "https://www.iana.org/assignments/media-types/";
+   public static final String PURL_ORG_PREFIX = "https://purl.org/NET/mediatypes/";
 
    static {
-      String defaultUri = Formatizer.IANA_ORG_PREFIX + "media-types.xhtml";
+      String defaultUri = Formatizer.PURL_ORG_PREFIX + "application/x.unknown";
       try {
          GENERIC_UNKNOWN = new URI(defaultUri);
       } catch (URISyntaxException e) {
@@ -200,7 +200,7 @@ public class Formatizer {
       if (format != null)
          return format;
       else if ("content/unknown" != mime) {
-         return FormatRecognizer.buildUri(IANA_ORG_PREFIX, mime, GENERIC_UNKNOWN);
+         return FormatRecognizer.buildUri(PURL_ORG_PREFIX, mime, GENERIC_UNKNOWN);
       } else {
          return GENERIC_UNKNOWN;
       }

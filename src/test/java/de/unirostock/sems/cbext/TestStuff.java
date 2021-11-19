@@ -105,7 +105,7 @@ public class TestStuff {
       assertNull("didn't expect format for null", dem.getFormatFromMime(null));
 
       try {
-         URI format = new URI(Formatizer.IANA_ORG_PREFIX + "application/xml");
+         URI format = new URI(Formatizer.PURL_ORG_PREFIX + "application/xml");
          assertEquals("unexpected format for .xml", format,
                  dem.getFormatFromExtension("xml"));
          assertNull("unexpected format for .xml",

@@ -157,44 +157,44 @@ public class TestFormats {
                       "test/aguda_b_1999.cellml",
                       "https://identifiers.org/combine.specifications/cellml",
                       "https://identifiers.org/combine.specifications/cellml",
-                      "https://www.iana.org/assignments/media-types/application/xml"
+                      "https://purl.org/NET/mediatypes/application/xml"
 
               },
               new Object[]{
                       "test/aguda_b_1999.cellml.wrong.ext",
                       "https://identifiers.org/combine.specifications/cellml",
                       Formatizer.GENERIC_UNKNOWN.toString(),
-                      "https://www.iana.org/assignments/media-types/application/xml"
+                      "https://purl.org/NET/mediatypes/application/xml"
               },
               new Object[]{
                       "test/guess-biopax-paxtools-core-src-main-resources-org-biopax-paxtools-model-biopax-level3.owl",
                       "https://identifiers.org/combine.specifications/biopax.level-3",
                       Formatizer.GENERIC_UNKNOWN.toString(),
-                      "https://www.iana.org/assignments/media-types/application/xml"
+                      "https://purl.org/NET/mediatypes/application/xml"
               },
               new Object[]{
                       "test/guess-SBOLj-examples-data-BBa_I0462.xml",
                       "https://identifiers.org/combine.specifications/sbol",
-                      "https://www.iana.org/assignments/media-types/application/xml",
-                      "https://www.iana.org/assignments/media-types/application/xml"
+                      "https://purl.org/NET/mediatypes/application/xml",
+                      "https://purl.org/NET/mediatypes/application/xml"
               },
               new Object[]{
                       "test/some.xml",
-                      "https://www.iana.org/assignments/media-types/application/xml",
-                      "https://www.iana.org/assignments/media-types/application/xml",
-                      "https://www.iana.org/assignments/media-types/application/xml"
+                      "https://purl.org/NET/mediatypes/application/xml",
+                      "https://purl.org/NET/mediatypes/application/xml",
+                      "https://purl.org/NET/mediatypes/application/xml"
               },
               new Object[]{
                       "test/some.rdf",
-                      "https://www.iana.org/assignments/media-types/application/xml",
+                      "https://purl.org/NET/mediatypes/application/xml",
                       Formatizer.GENERIC_UNKNOWN.toString(),
-                      "https://www.iana.org/assignments/media-types/application/xml"
+                      "https://purl.org/NET/mediatypes/application/xml"
               },
               new Object[]{
                       "test/plain.text",
-                      "https://www.iana.org/assignments/media-types/text/plain",
+                      "https://purl.org/NET/mediatypes/text/plain",
                       Formatizer.GENERIC_UNKNOWN.toString(),
-                      "https://www.iana.org/assignments/media-types/text/plain"
+                      "https://purl.org/NET/mediatypes/text/plain"
               }
       };
    }
