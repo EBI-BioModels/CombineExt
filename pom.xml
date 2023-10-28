@@ -111,17 +111,52 @@
         </dependency>
     </dependencies>
     <distributionManagement>
+        <!-- EBI repo -->
         <repository>
-            <id>ebi-release</id>
-            <name>EBI Maven Release repository</name>
-            <url>scp://login.ebi.ac.uk/homes/maven/public_html/m2repo</url>
+            <id>pst-release</id>
+            <name>EBI Nexus Repository</name>
+            <url>https://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-release</url>
         </repository>
+        <!-- EBI SNAPSHOT repo -->
         <snapshotRepository>
-            <id>ebi-snapshot</id>
-            <name>EBI Maven Snapshot repository</name>
-            <url>scp://login.ebi.ac.uk/homes/maven/public_html/m2repo_snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
+            <id>pst-snapshots</id>
+            <name>EBI Nexus Snapshots Repository</name>
+            <url>https://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
+    <repositories>
+        <repository>
+            <id>mvn-central</id>
+            <name>Central Maven Repository</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+        <!-- EBI Nexus pst-release repo -->
+        <repository>
+            <id>ebi-nexus-pst-release</id>
+            <name>The EBI internal repository</name>
+            <url>https://www.ebi.ac.uk/Tools/maven/repos/content/groups/pst-release/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- EBI Nexus pst-snapshots repo -->
+        <repository>
+            <id>ebi-nexus-pst-snapshots-repo</id>
+            <name>The EBI internal snapshots repository</name>
+            <url>https://www.ebi.ac.uk/Tools/maven/repos/content/groups/pst-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+    </repositories>
     <build>
         <extensions>
             <extension>
