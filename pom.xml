@@ -140,7 +140,7 @@
         <repository>
             <id>ebi-nexus-pst-release</id>
             <name>The EBI internal repository</name>
-            <url>https://www.ebi.ac.uk/Tools/maven/repos/content/groups/pst-release/</url>
+            <url>https://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-release/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -152,7 +152,7 @@
         <repository>
             <id>ebi-nexus-pst-snapshots-repo</id>
             <name>The EBI internal snapshots repository</name>
-            <url>https://www.ebi.ac.uk/Tools/maven/repos/content/groups/pst-snapshots/</url>
+            <url>https://www.ebi.ac.uk/Tools/maven/repos/content/repositories/pst-snapshots/</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
