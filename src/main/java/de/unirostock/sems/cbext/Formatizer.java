@@ -22,15 +22,12 @@ package de.unirostock.sems.cbext;
 
 import de.binfalse.bflog.LOGGER;
 import de.unirostock.sems.cbext.recognizer.*;
-import net.biomodels.jummp.utils.ProxySetting;
+import net.biomodels.jummp.utils.MimeTypeChecker;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.Proxy;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLConnection;
 import java.util.*;
 
 
@@ -139,28 +136,19 @@ public class Formatizer {
       if (file == null || !file.isFile())
          return null;
 
+      String mime = MimeTypeChecker.check(file);
+      if (mime == null) {
+         LOGGER.debug("cannot guess the format of file " + file.getName());
+         return null;
+      }
       String extension = FilenameUtils.getExtension(file.getName());
       Set<String> COMPRESSED_EXT = new HashSet<>(Arrays.asList("zip", "rar", "tgz", "tar", "bz2", "gz"));
       if (COMPRESSED_EXT.contains(extension)) {
          try {
-            return new URI(Formatizer.PURL_ORG_PREFIX + "application/octet-stream");
+            return new URI(Formatizer.PURL_ORG_PREFIX + mime);
          } catch (URISyntaxException e) {
             LOGGER.debug("An error happened when trying to create an URI");
          }
-      }
-      String mime;
-      try {
-         Proxy proxy = ProxySetting.detect();
-         URLConnection connection;
-         if (proxy != null) {
-            connection = file.toURI().toURL().openConnection(proxy);
-         } else {
-            connection = file.toURI().toURL().openConnection();
-         }
-         mime = connection.getContentType();
-      } catch (IOException e) {
-         LOGGER.warn(e, "could not get mime from file " + file);
-         return null;
       }
 
       URI format = null;
