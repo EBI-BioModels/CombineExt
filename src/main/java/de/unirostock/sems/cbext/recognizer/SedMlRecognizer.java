@@ -45,9 +45,9 @@ public class SedMlRecognizer
    /**
     * Sets the priority of this format recognizer and triggers a resort of all
     * format recognizers.
-    *
+    * <p>
     * The higher the priority, the earlier this recognizer gets called.
-    * The first recognizer, which is able to identify a file, determines it's
+    * The first recognizer, which is able to identify a file, determines its
     * format.
     * Setting a negative priority will be ignored.
     * Default recognizers have a priority of 100.
@@ -88,7 +88,7 @@ public class SedMlRecognizer
             StringBuilder errors = new StringBuilder();
             for (SedMLError e : doc.getErrors())
                if (e.getSeverity().compareTo(SedMLError.ERROR_SEVERITY.ERROR) >= 0)
-                  errors.append("[" + e.getMessage() + "]");
+                  errors.append("[").append(e.getMessage()).append("]");
             if (errors.length() > 0)
                throw new IOException("error reading sedml file: "
                        + errors);

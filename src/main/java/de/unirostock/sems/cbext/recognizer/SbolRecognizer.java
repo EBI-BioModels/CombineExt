@@ -46,7 +46,7 @@ public class SbolRecognizer
     * format recognizers.
     *
     * The higher the priority, the earlier this recognizer gets called.
-    * The first recognizer, which is able to identify a file, determines it's
+    * The first recognizer, which is able to identify a file, determines its
     * format.
     * Setting a negative priority will be ignored.
     * Default recognizers have a priority of 100.

@@ -1,10 +1,12 @@
 package de.unirostock.sems.cbext;
 
+import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import net.biomodels.jummp.utils.ProxySetting;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
 import java.net.FileNameMap;
@@ -12,11 +14,8 @@ import java.net.Proxy;
 import java.net.URLConnection;
 import java.nio.file.Files;
 
-import static org.junit.Assert.*;
-
-import junitparams.JUnitParamsRunner;
-
-import javax.activation.MimetypesFileTypeMap;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * This test class is created to test some handy built-in methods to detect the mime type of files. The

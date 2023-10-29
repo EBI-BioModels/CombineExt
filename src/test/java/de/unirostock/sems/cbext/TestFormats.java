@@ -45,17 +45,17 @@ public class TestFormats {
    /**
     * Check format.
     *
-    * @param file          the file
+    * @param filePath      the file path
     * @param expectedGuess the expected format by guess
     * @param expectedExt   the expected format from the extension
     * @param expectedMime  the expected format from the mime
     */
-   public static void checkFormat(String file, String expectedGuess,
+   public static void checkFormat(String filePath, String expectedGuess,
                                   String expectedExt, String expectedMime) {
-      File f = new File(file);
-      String absFilePath = f.getAbsolutePath();
+      File file = new File(filePath);
+      String absFilePath = file.getAbsolutePath();
       try {
-         URI format = Formatizer.guessFormat(f);
+         URI format = Formatizer.guessFormat(file);
          assertEquals("got wrong format for guessing " + absFilePath, expectedGuess, format.toString());
 
          Proxy proxy = ProxySetting.detect();
@@ -68,7 +68,7 @@ public class TestFormats {
          format = Formatizer.getFormatFromMime(connection.getContentType());
          assertEquals("got wrong format for mime of " + absFilePath, expectedMime, format.toString());
 
-         String fileExt = f.getName().substring(f.getName().lastIndexOf(".") + 1);
+         String fileExt = file.getName().substring(file.getName().lastIndexOf(".") + 1);
          format = Formatizer.getFormatFromExtension(fileExt);
          assertEquals("got wrong format for ext of " + absFilePath, expectedExt, format.toString());
       } catch (IOException e) {
