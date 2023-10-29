@@ -23,16 +23,14 @@ package de.unirostock.sems.cbext;
 import de.binfalse.bflog.LOGGER;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import net.biomodels.jummp.utils.ProxySetting;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 
 import static org.junit.Assert.*;
 
@@ -60,7 +58,13 @@ public class TestFormats {
          URI format = Formatizer.guessFormat(f);
          assertEquals("got wrong format for guessing " + absFilePath, expectedGuess, format.toString());
 
-         URLConnection connection = f.toURI().toURL().openConnection();
+         Proxy proxy = ProxySetting.detect();
+         URLConnection connection;
+         if (proxy != null) {
+            connection = file.toURI().toURL().openConnection(proxy);
+         } else {
+            connection = file.toURI().toURL().openConnection();
+         }
          format = Formatizer.getFormatFromMime(connection.getContentType());
          assertEquals("got wrong format for mime of " + absFilePath, expectedMime, format.toString());
 

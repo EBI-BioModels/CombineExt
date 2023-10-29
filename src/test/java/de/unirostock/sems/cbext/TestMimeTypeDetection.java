@@ -1,12 +1,14 @@
 package de.unirostock.sems.cbext;
 
 import junitparams.Parameters;
+import net.biomodels.jummp.utils.ProxySetting;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.FileNameMap;
+import java.net.Proxy;
 import java.net.URLConnection;
 import java.nio.file.Files;
 
@@ -51,7 +53,13 @@ public class TestMimeTypeDetection {
           final String fName, final String expectedMimeType) throws IOException {
 
       File file = new File(fPath, fName);
-      URLConnection connection = file.toURI().toURL().openConnection();
+      Proxy proxy = ProxySetting.detect();
+      URLConnection connection;
+      if (proxy != null) {
+         connection = file.toURI().toURL().openConnection(proxy);
+      } else {
+         connection = file.toURI().toURL().openConnection();
+      }
       String mimeType = connection.getContentType();
 
       assertEquals("The mime type of the file \\'" + file.getName() + "\\' might be null",

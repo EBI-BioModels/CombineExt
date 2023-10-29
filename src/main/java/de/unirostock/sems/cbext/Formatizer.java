@@ -22,9 +22,11 @@ package de.unirostock.sems.cbext;
 
 import de.binfalse.bflog.LOGGER;
 import de.unirostock.sems.cbext.recognizer.*;
+import net.biomodels.jummp.utils.ProxySetting;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.Proxy;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLConnection;
@@ -141,7 +143,13 @@ public class Formatizer {
 
       String mime;
       try {
-         URLConnection connection = file.toURI().toURL().openConnection();
+         Proxy proxy = ProxySetting.detect();
+         URLConnection connection;
+         if (proxy != null) {
+            connection = file.toURI().toURL().openConnection(proxy);
+         } else {
+            connection = file.toURI().toURL().openConnection();
+         }
          mime = connection.getContentType();
       } catch (IOException e) {
          LOGGER.warn(e, "could not get mime from file " + file);
