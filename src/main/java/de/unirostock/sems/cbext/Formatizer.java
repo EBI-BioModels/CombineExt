@@ -23,6 +23,7 @@ package de.unirostock.sems.cbext;
 import de.binfalse.bflog.LOGGER;
 import de.unirostock.sems.cbext.recognizer.*;
 import net.biomodels.jummp.utils.ProxySetting;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,10 +31,7 @@ import java.net.Proxy;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -141,6 +139,15 @@ public class Formatizer {
       if (file == null || !file.isFile())
          return null;
 
+      String extension = FilenameUtils.getExtension(file.getName());
+      Set<String> COMPRESSED_EXT = new HashSet<>(Arrays.asList("zip", "rar", "tgz", "tar", "bz2", "gz"));
+      if (COMPRESSED_EXT.contains(extension)) {
+         try {
+            return new URI(Formatizer.PURL_ORG_PREFIX + "application/octet-stream");
+         } catch (URISyntaxException e) {
+            LOGGER.debug("An error happened when trying to create an URI");
+         }
+      }
       String mime;
       try {
          Proxy proxy = ProxySetting.detect();
@@ -165,7 +172,6 @@ public class Formatizer {
 
       if (format != null) {
          // found a format
-         return format;
       } else {
          // ok, parsing failed. let's still try file extensions.
          String name = file.getName();
@@ -183,8 +189,8 @@ public class Formatizer {
             // guessing via the file extension still failed, try to map mime-type
             format = getFormatFromMime(mime);
          }
-         return format;
       }
+       return format;
    }
 
 
