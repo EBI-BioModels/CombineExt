@@ -20,10 +20,11 @@
  */
 package de.unirostock.sems.cbext;
 
-import de.binfalse.bflog.LOGGER;
 import de.unirostock.sems.cbext.recognizer.*;
 import net.biomodels.jummp.utils.MimeTypeChecker;
 import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URI;
@@ -51,6 +52,7 @@ import java.util.*;
  * @author Martin Scharm
  */
 public class Formatizer {
+   private static final Logger LOGGER = LoggerFactory.getLogger(Formatizer.class);
 
    /** list of registered format recognizers. */
    private static final List<FormatRecognizer> recognizerList = new ArrayList<>();
@@ -62,7 +64,7 @@ public class Formatizer {
          GENERIC_UNKNOWN = new URI(defaultUri);
       } catch (URISyntaxException e) {
          e.printStackTrace();
-         LOGGER.error(e, "error generating generic default uri: ", defaultUri);
+         LOGGER.error("when generating generic default uri {}, there has been an error {}", defaultUri, e.getMessage());
       }
 
       // add default recognizers
