@@ -161,35 +161,21 @@ public class Formatizer {
       }
 
       if (format != null) {
-         // found a format
+         // found a format, do nothing
+         LOGGER.debug("found " + format);
       } else {
-         // ok, parsing failed. let's still try file extensions.
-         String name = file.getName();
-         int dot = name.lastIndexOf(".");
-         if (dot > 0) {
-            String ext = name.substring(dot + 1);
-            if (ext.equals("sbml") || ext.equals("sedml")
-                    || ext.equals("sed-ml") || ext.equals("sbgn")
-                    || ext.equals("omex") || ext.equals("cellml")
-                    || ext.equals("biopax") || ext.equals("xml")) {
-               format = getFormatFromExtension(ext);
-            }
-         }
-         if (null == format || format.equals(GENERIC_UNKNOWN)) {
-            // guessing via the file extension still failed, try to map mime-type
-            format = getFormatFromMime(mime);
-         }
+         // ok, parsing failed. let's still try to guess a format using file extensions or mimes.
+         format = guessFormatUsingFileMimeOrExtension(file, mime);
       }
        return format;
    }
-
 
    /**
     * Gets the format given a mime type.
     *
     * @param mime
-    *          the mime type
-    * @return the format
+    *          a String object denoting the mime type
+    * @return an {@link URI} object as the format
     */
    public static URI getFormatFromMime(String mime) {
       if (mime == null)
@@ -215,7 +201,7 @@ public class Formatizer {
     * Gets the format given a file extension.
     *
     * @param extension
-    *          the file extension
+    *          a String object indicating the file extension
     * @return the format
     */
    public static URI getFormatFromExtension(String extension) {
@@ -250,5 +236,25 @@ public class Formatizer {
          return o2.getPriority() - o1.getPriority();
       }
 
+   }
+
+   private static URI guessFormatUsingFileMimeOrExtension(final File file, final String mime) {
+      URI format = null;
+      String name = file.getName();
+      int dot = name.lastIndexOf(".");
+      if (dot > 0) {
+         String ext = name.substring(dot + 1);
+         if (ext.equals("sbml") || ext.equals("sedml")
+                 || ext.equals("sed-ml") || ext.equals("sbgn")
+                 || ext.equals("omex") || ext.equals("cellml")
+                 || ext.equals("biopax") || ext.equals("xml")) {
+            format = getFormatFromExtension(ext);
+         }
+      }
+      if (null == format || format.equals(GENERIC_UNKNOWN)) {
+         // guessing via the file extension still failed, try to map mime-type
+         format = getFormatFromMime(mime);
+      }
+      return format;
    }
 }
