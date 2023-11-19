@@ -65,7 +65,7 @@ public class Formatizer {
       add("sbgn");
       add("omex");
       add("cellml");
-      add("biopax");
+      add("owl");
       add("xml");
    }};
 
