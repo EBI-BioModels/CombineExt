@@ -118,7 +118,9 @@ public class TestMimeTypeDetection {
          new Object[] {"test/Files2TestMimeTypeDetection", "k8s-cluster.png", "image/png"},
          new Object[] {"test/Files2TestMimeTypeDetection", "plain.text", "text/plain"},
          new Object[] {"test/Files2TestMimeTypeDetection", "plaintext", "content/unknown"},
-         new Object[] {"test", "BIOMD0000000459.xml", "application/xml"}
+         new Object[] {"test", "BIOMD0000000459.xml", "application/xml"},
+         new Object[] {"test/Files2TestMimeTypeDetection", "pred_script.py", "text/plain"},
+         new Object[] {"test/Files2TestMimeTypeDetection", "Model_annotation_file.csv", "text/plain"}
       };
    }
 
