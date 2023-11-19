@@ -25,12 +25,14 @@ import de.unirostock.sems.cbext.FormatRecognizer;
 import de.unirostock.sems.cbext.Formatizer;
 import org.biopax.paxtools.io.BioPAXIOHandler;
 import org.biopax.paxtools.model.BioPAXLevel;
+import org.biopax.paxtools.model.Model;
 import org.biopax.paxtools.util.BioPaxIOException;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
 
 
 /**
@@ -83,14 +85,11 @@ public class BioPaxRecognizer
       try {
          BioPAXIOHandler handler = new org.biopax.paxtools.io.SimpleIOHandler(); // auto-detects
          // Level
-         org.biopax.paxtools.model.Model model = handler
-                 .convertFromOWL(new FileInputStream(file));
+         Model model = handler.convertFromOWL(Files.newInputStream(file.toPath()));
          BioPAXLevel bioPAXLevel = model.getLevel();
-         String level = "";
-         if (bioPAXLevel.name() != null || bioPAXLevel.name() != "") {
-            String d = bioPAXLevel.name().substring(1);
-            level = ".level-".concat(d);
-         }
+         String level;
+         String d = bioPAXLevel.name().substring(1);
+         level = ".level-".concat(d);
          return buildUri(IDENTIFIERS_BASE, "biopax" + level);
       } catch (IOException | BioPaxIOException e) {
          LOGGER.info(e, "file ", file, " seems not to be a valid BioPAX document.");

@@ -108,10 +108,10 @@ public class TestFormats {
       }
 
       String iconName = Iconizer.formatToIcon(format);
-      assertEquals("expected to get the sbml icon", "Blue-sbml.png", iconName);
+      assertEquals("expected to get the SBML icon", "Blue-sbml.png", iconName);
 
       URL iconUrl = Iconizer.formatToIconUrl(format);
-      assertTrue("unexpexted URL for SBML icon",
+      assertTrue("unexpected URL for SBML icon",
               iconUrl.toString().endsWith("Blue-sbml.png"));
 
       InputStream fin = Iconizer.formatToIconStream(format);
