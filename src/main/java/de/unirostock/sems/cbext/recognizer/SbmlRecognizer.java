@@ -95,8 +95,8 @@ public class SbmlRecognizer extends FormatRecognizer {
             result = buildUri(IDENTIFIERS_BASE, "sbml.level-" + levelVersion[0] + ".version-" + levelVersion[1]);
          }
       } catch (Exception e) {
-         //LOGGER.info(e, "file ", file, " seems to be a valid SBML document.");
-         System.out.println("file " + file.getName() + " seems to be an invalid SBML document.");
+         LOGGER.info("File {} seems to be an invalid SBML document. Failure reason: {}", file.getAbsolutePath(), e.toString());
+         e.printStackTrace();
       }
 
       return result;
