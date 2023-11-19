@@ -22,6 +22,8 @@ package de.unirostock.sems.cbext.recognizer;
 
 import de.unirostock.sems.cbext.FormatRecognizer;
 import de.unirostock.sems.cbext.Formatizer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -39,21 +41,22 @@ import java.util.Objects;
 
 
 /**
- * The Class SbmlFormatizer to recognize sbml files.
+ * The Class SbmlFormatizer to recognize SBML files.
  */
-public class SbmlRecognizer
-        extends FormatRecognizer {
+public class SbmlRecognizer extends FormatRecognizer {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(SbmlRecognizer.class);
 
    /** priority for this format recognizer */
    protected static int priority = 100;
 
    /**
-    * Sets the priority of this format recognizer and triggers a resort of all
-    * format recognizers.
-    *
+    * <p>Sets the priority of this format recognizer and triggers a resort of all
+    * format recognizers.</p>
+    * <p>
     * The higher the priority, the earlier this recognizer gets called.
     * The first recognizer, which is able to identify a file, determines it's
-    * format.
+    * format.</p>
     * Setting a negative priority will be ignored.
     * Default recognizers have a priority of 100.
     *
@@ -115,6 +118,7 @@ public class SbmlRecognizer
    }
 
    public String[] getSbmlLevelAndVersion(String sbmlFilePath) throws IOException, XMLStreamException {
+        LOGGER.info("Using StAX library to extract SBML Level and Version instead of using JSBML library.");
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         XMLEventReader reader = xmlInputFactory.createXMLEventReader(Files.newInputStream(Paths.get(sbmlFilePath)));
         String[] strLevelVersion = new String[2];
