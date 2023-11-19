@@ -23,7 +23,12 @@ package de.unirostock.sems.cbext;
 import de.unirostock.sems.cbext.collections.DefaultIconCollection;
 import de.unirostock.sems.cbext.recognizer.DefaultRecognizer;
 import de.unirostock.sems.cbext.recognizer.SbmlRecognizer;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.sbml.jsbml.SBMLDocument;
+import org.sbml.jsbml.SBMLReader;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
@@ -33,6 +38,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Set;
 
+import static de.unirostock.sems.cbext.FormatRecognizer.buildUri;
 import static org.junit.Assert.*;
 
 
@@ -41,6 +47,7 @@ import static org.junit.Assert.*;
  *
  * @author Martin Scharm
  */
+@RunWith(JUnitParamsRunner.class)
 public class TestStuff {
 
    /**
@@ -49,9 +56,9 @@ public class TestStuff {
    @Test
    public void testFormatParser() {
       assertNotNull("valid URI shouln't return null",
-              FormatRecognizer.buildUri("http://", "binfalse.de"));
+              buildUri("http://", "binfalse.de"));
       assertNull("valid URI shouldn't return null",
-              FormatRecognizer.buildUri(":", "binfalse.de"));
+              buildUri(":", "binfalse.de"));
    }
 
 
@@ -159,7 +166,7 @@ public class TestStuff {
       assertEquals("generic icon has unexpected size", 1487, noOfBytes);
 
       // test icon for unknown uri
-      fin = Iconizer.formatToIconStream(FormatRecognizer.buildUri("https://",
+      fin = Iconizer.formatToIconStream(buildUri("https://",
               "binfalse.de"));
       bytes = new byte[1024];
       noOfBytes = 0;
@@ -212,6 +219,43 @@ public class TestStuff {
       assertEquals("expected generic format for null mime",
               Formatizer.GENERIC_UNKNOWN, Formatizer.getFormatFromMime(null));
 
+   }
+
+   private Object[] params2TestReadSBMLDocument() {
+      return new Object[]{
+        new Object[]{
+          "test/00001-sbml-l2v1.xml",
+          "sbml.level-2.version-1",
+        },
+        new Object[]{
+          "test/BIOMD0000000459.xml",
+          "sbml.level-2.version-4",
+        },
+        new Object[]{
+          "test/BIOMD0000000624.xml",
+          "sbml.level-2.version-4",
+        },
+        new Object[]{
+          "test/Stucki2005.xml",
+          "sbml.level-2.version-4",
+        }
+      };
+   }
+   @Test
+   @Parameters(method = "params2TestReadSBMLDocument")
+   public void testReadSBMLDocument(final String sbmlFilePath, final String expectedLevelVersion) {
+      File file = new File(sbmlFilePath);
+      try {
+         SBMLReader reader = new SBMLReader();
+         SBMLDocument doc = reader.readSBMLFromFile(file.getAbsolutePath());
+         assertNotNull(doc);
+         String actualLevelVersion = "sbml.level-" + doc.getLevel() + ".version-" + doc.getVersion();
+         assertEquals(expectedLevelVersion, actualLevelVersion);
+      } catch (Exception e) {
+         //LOGGER.info(e, "file ", file, " seems to be a valid SBML document.");
+         System.out.println("file " + file.getName() + " seems to be an invalid SBML document.");
+         e.printStackTrace();
+      }
    }
 
    @Test
