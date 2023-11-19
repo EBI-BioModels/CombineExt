@@ -35,6 +35,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.Objects;
 
 
 /**
@@ -121,16 +122,16 @@ public class SbmlRecognizer
             XMLEvent nextEvent = reader.nextEvent();
             if (nextEvent.isStartElement()) {
                 StartElement startElement = nextEvent.asStartElement();
-                if (startElement.getName().getLocalPart() == "sbml") {
-                    Iterator<Attribute> itAttrs = startElement.getAttributes();
+                if (Objects.equals(startElement.getName().getLocalPart(), "sbml")) {
+                    Iterator itAttrs = startElement.getAttributes();
                     String level = "";
                     String version = "";
                     while (itAttrs.hasNext()) {
-                        Attribute attr = itAttrs.next();
-                        if (attr.getName().getLocalPart() == "level") {
+                        Attribute attr = (Attribute) itAttrs.next();
+                        if (Objects.equals(attr.getName().getLocalPart(), "level")) {
                             level = attr.getValue();
                         }
-                        if (attr.getName().getLocalPart() == "version") {
+                        if (Objects.equals(attr.getName().getLocalPart(), "version")) {
                             version = attr.getValue();
                         }
                         if (level != null && version != null) {
