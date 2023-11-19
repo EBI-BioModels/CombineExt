@@ -58,6 +58,17 @@ public class Formatizer {
    private static final List<FormatRecognizer> recognizerList = new ArrayList<>();
    public static final String PURL_ORG_PREFIX = "https://purl.org/NET/mediatypes/";
 
+   public static final ArrayList<String> WELL_SUPPORT_FORMATS = new ArrayList<String>() {{
+      add("sbml");
+      add("sed-ml");
+      add("sedml");
+      add("sbgn");
+      add("omex");
+      add("cellml");
+      add("biopax");
+      add("xml");
+   }};
+
    static {
       String defaultUri = Formatizer.PURL_ORG_PREFIX + "application/x.unknown";
       try {
@@ -123,7 +134,7 @@ public class Formatizer {
     * Must be called if the priorities of recognizers are modified.
     */
    public static void resortRecognizers() {
-      Collections.sort(recognizerList, new RecognizerComparator());
+      recognizerList.sort(new RecognizerComparator());
    }
 
 
@@ -155,7 +166,9 @@ public class Formatizer {
 
       URI format = null;
       for (FormatRecognizer recognizer : recognizerList) {
-         format = recognizer.getFormatByParsing(file, mime);
+         if (WELL_SUPPORT_FORMATS.contains(extension)) {
+            format = recognizer.getFormatByParsing(file, mime);
+         }
          if (format != null)
             break;
       }
@@ -244,12 +257,7 @@ public class Formatizer {
       int dot = name.lastIndexOf(".");
       if (dot > 0) {
          String ext = name.substring(dot + 1);
-         if (ext.equals("sbml") || ext.equals("sedml")
-                 || ext.equals("sed-ml") || ext.equals("sbgn")
-                 || ext.equals("omex") || ext.equals("cellml")
-                 || ext.equals("biopax") || ext.equals("xml")) {
-            format = getFormatFromExtension(ext);
-         }
+         format = getFormatFromExtension(ext);
       }
       if (null == format || format.equals(GENERIC_UNKNOWN)) {
          // guessing via the file extension still failed, try to map mime-type
