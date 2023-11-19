@@ -166,6 +166,7 @@ public class Formatizer {
 
       URI format = null;
       for (FormatRecognizer recognizer : recognizerList) {
+         // TODO: will lift this restriction later once we complete to generate all OMEX files for the whole database
          if (WELL_SUPPORT_FORMATS.contains(extension)) {
             format = recognizer.getFormatByParsing(file, mime);
          }

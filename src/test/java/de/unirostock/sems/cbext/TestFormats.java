@@ -166,7 +166,7 @@ public class TestFormats {
               },
               new Object[]{
                       "test/aguda_b_1999.cellml.wrong.ext",
-                      "https://identifiers.org/combine.specifications/cellml",
+                      "https://purl.org/NET/mediatypes/application/xml",
                       Formatizer.GENERIC_UNKNOWN.toString(),
                       "https://purl.org/NET/mediatypes/application/xml"
               },
