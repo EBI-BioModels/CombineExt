@@ -22,8 +22,10 @@ package de.unirostock.sems.cbext;
 
 import de.unirostock.sems.cbext.collections.DefaultIconCollection;
 import de.unirostock.sems.cbext.recognizer.DefaultRecognizer;
+import de.unirostock.sems.cbext.recognizer.SbmlRecognizer;
 import org.junit.Test;
 
+import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -212,4 +214,25 @@ public class TestStuff {
 
    }
 
+   @Test
+   public void testSBMLLevelAndVersion() {
+      File file = new File("test/BIOMD0000000459.xml");
+      try {
+         SbmlRecognizer sbmlRecognizer = new SbmlRecognizer();
+         String[] lv = sbmlRecognizer.getSbmlLevelAndVersion(file.getAbsolutePath());
+         System.out.println("Level: " + lv[0] + " Version: " + lv[1]);
+         assertEquals("2", lv[0]);
+         assertEquals("4", lv[1]);
+         URI uri = sbmlRecognizer.getFormatByParsing(file, "application/xml");
+         System.out.println(uri);
+         URI expectedURI = new URI("https://identifiers.org/combine.specifications/sbml.level-2.version-4");
+         assertEquals(expectedURI, uri);
+      } catch (IOException e) {
+         throw new RuntimeException(e);
+      } catch (XMLStreamException e) {
+         throw new RuntimeException(e);
+      } catch (URISyntaxException e) {
+          throw new RuntimeException(e);
+      }
+   }
 }

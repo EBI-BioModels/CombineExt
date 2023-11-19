@@ -20,14 +20,21 @@
  */
 package de.unirostock.sems.cbext.recognizer;
 
-import de.binfalse.bflog.LOGGER;
 import de.unirostock.sems.cbext.FormatRecognizer;
 import de.unirostock.sems.cbext.Formatizer;
-import org.sbml.jsbml.SBMLDocument;
-import org.sbml.jsbml.SBMLReader;
 
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Attribute;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Iterator;
 
 
 /**
@@ -79,10 +86,13 @@ public class SbmlRecognizer
    public URI getFormatByParsing(File file, String mimeType) {
       URI result = null;
       try {
-         SBMLDocument doc = SBMLReader.read(file);
-         result = buildUri(IDENTIFIERS_BASE, "sbml.level-" + doc.getLevel() + ".version-" + doc.getVersion());
+         String[] levelVersion = getSbmlLevelAndVersion(file.getAbsolutePath());
+         if (levelVersion.length == 2 && levelVersion[0] != null && levelVersion[1] != null) {
+            result = buildUri(IDENTIFIERS_BASE, "sbml.level-" + levelVersion[0] + ".version-" + levelVersion[1]);
+         }
       } catch (Exception e) {
-         LOGGER.info(e, "file ", file, " seems to be a valid SBML document.");
+         //LOGGER.info(e, "file ", file, " seems to be a valid SBML document.");
+         System.out.println("file " + file.getName() + " seems to be an invalid SBML document.");
       }
 
       return result;
@@ -103,4 +113,35 @@ public class SbmlRecognizer
       return null;
    }
 
+   public String[] getSbmlLevelAndVersion(String sbmlFilePath) throws IOException, XMLStreamException {
+        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+        XMLEventReader reader = xmlInputFactory.createXMLEventReader(Files.newInputStream(Paths.get(sbmlFilePath)));
+        String[] strLevelVersion = new String[2];
+        while (reader.hasNext()) {
+            XMLEvent nextEvent = reader.nextEvent();
+            if (nextEvent.isStartElement()) {
+                StartElement startElement = nextEvent.asStartElement();
+                if (startElement.getName().getLocalPart() == "sbml") {
+                    Iterator<Attribute> itAttrs = startElement.getAttributes();
+                    String level = "";
+                    String version = "";
+                    while (itAttrs.hasNext()) {
+                        Attribute attr = itAttrs.next();
+                        if (attr.getName().getLocalPart() == "level") {
+                            level = attr.getValue();
+                        }
+                        if (attr.getName().getLocalPart() == "version") {
+                            version = attr.getValue();
+                        }
+                        if (level != null && version != null) {
+                            strLevelVersion[0] = level;
+                            strLevelVersion[1] = version;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return strLevelVersion;
+    }
 }

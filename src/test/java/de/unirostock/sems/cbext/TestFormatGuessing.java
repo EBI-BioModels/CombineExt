@@ -21,7 +21,10 @@
 package de.unirostock.sems.cbext;
 
 import de.unirostock.sems.cbext.recognizer.*;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,36 +38,56 @@ import static org.junit.Assert.*;
  * @author Martin Scharm
  *
  */
+@RunWith(JUnitParamsRunner.class)
 public class TestFormatGuessing {
 
    /** The Constant XML_FILE. */
    public static final File XML_FILE = new File("test/some.xml");
 
 
+   private Object[] params2TestGuessSBML() {
+      return new Object[]{
+              new Object[]{
+                "test/00001-sbml-l2v1.xml",
+                "https://identifiers.org/combine.specifications/sbml.level-2.version-1",
+              },
+              new Object[]{
+                "test/BIOMD0000000459.xml",
+                "https://identifiers.org/combine.specifications/sbml.level-2.version-4",
+              },
+              new Object[]{
+                "test/BIOMD0000000624.xml",
+                "https://identifiers.org/combine.specifications/sbml.level-2.version-4",
+              },
+              new Object[]{
+                "test/Stucki2005.xml",
+                "https://identifiers.org/combine.specifications/sbml.level-2.version-4",
+              }
+      };
+   }
+
    /**
     * Test SBML guessing.
     */
    @Test
-   public void testGuessSBML() {
-      File f = new File("test/BIOMD0000000459.xml");
-      String fn = f.getAbsolutePath();
-      String correctFormat = "https://identifiers.org/combine.specifications/sbml.level-2.version-4";
-      URI format = Formatizer.guessFormat(f);
-      assertEquals("got wrong format for " + fn, correctFormat,
-              format.toString());
+   @Parameters(method = "params2TestGuessSBML")
+   public void testGuessSBML(final String filePath, final String correctFormat) {
+      File file = new File(filePath);
+      String detectedFormat = Formatizer.guessFormat(file).toString();
+      assertEquals(correctFormat, detectedFormat);
 
       // test the recognizer
       SbmlRecognizer recognizer = new SbmlRecognizer();
       String mime = null;
       try {
-         mime = Files.probeContentType(f.toPath());
+         mime = Files.probeContentType(file.toPath());
       } catch (IOException e) {
          e.printStackTrace();
          fail("wasn't able to get mime...");
       }
-
-      assertEquals("got wrong format for " + fn, correctFormat,
-              recognizer.getFormatByParsing(f, mime).toString());
+      URI uri = recognizer.getFormatByParsing(file, mime);
+      String fn = file.getAbsolutePath();
+      assertEquals("got wrong format for " + fn, correctFormat, uri.toString());
       assertNull("got wrong format for " + fn,
               recognizer.getFormatByParsing(XML_FILE, mime));
 
@@ -225,8 +248,7 @@ public class TestFormatGuessing {
       String fn = f.getAbsolutePath();
       String correctFormat = "https://identifiers.org/combine.specifications/sed-ml.level-1.version-2";
       URI format = Formatizer.guessFormat(f);
-      assertEquals("got wrong format for " + fn, correctFormat,
-              format.toString());
+      assertEquals("got wrong format for " + fn, correctFormat, format.toString());
 
       // test the recognizer
       SedMlRecognizer recognizer = new SedMlRecognizer();
