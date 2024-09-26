@@ -36,8 +36,8 @@ import java.util.*;
  * The Class Formatizer to generate format URIs for certain files.
  *
  * This class hosts a bunch of format recognizers (see {@link FormatRecognizer})
- * which are able to recognize files and provide format URIs.
- * By default, we are able to recognize SED-ML, BioPax, CellML, SBML, and SBOL.
+ * which can recognize files and provide format URIs.
+ * By default, we can recognize SED-ML, BioPax, CellML, SBML, and SBOL.
  * You can extend the default list by passing further FormatRecognizers to
  * {@link #addFormatRecognizer (de.unirostock.sems.cbext.FormatRecognizer)}.
  *
@@ -50,6 +50,7 @@ import java.util.*;
  * The result will be a link to, e.g., purl.org or identifiers.org.
  *
  * @author Martin Scharm
+ * @author Tung Nguyen
  */
 public class Formatizer {
    private static final Logger LOGGER = LoggerFactory.getLogger(Formatizer.class);
@@ -151,7 +152,7 @@ public class Formatizer {
 
       String mime = MimeTypeChecker.check(file);
       if (mime == null) {
-         LOGGER.debug("cannot guess the format of file " + file.getName());
+          LOGGER.debug("cannot guess the format of file {}", file.getName());
          return null;
       }
       String extension = FilenameUtils.getExtension(file.getName());
@@ -176,7 +177,7 @@ public class Formatizer {
 
       if (format != null) {
          // found a format, do nothing
-         LOGGER.debug("found " + format);
+          LOGGER.debug("found {}", format);
       } else {
          // ok, parsing failed. let's still try to guess a format using file extensions or mimes.
          format = guessFormatUsingFileMimeOrExtension(file, mime);
@@ -240,7 +241,7 @@ public class Formatizer {
    private static class RecognizerComparator
            implements Comparator<FormatRecognizer> {
 
-      /*
+      /**
        * (non-Javadoc)
        *
        * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)

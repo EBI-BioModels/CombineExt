@@ -20,7 +20,8 @@
  */
 package de.unirostock.sems.cbext;
 
-import de.binfalse.bflog.LOGGER;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URI;
@@ -28,7 +29,7 @@ import java.net.URISyntaxException;
 
 
 /**
- * Instances of the class FormatRecognizer are able to recognise the format of
+ * Instances of the class FormatRecognizer are unable to recognise the format of
  * files.
  * <p>
  * They determine the formats by either
@@ -55,7 +56,7 @@ import java.net.URISyntaxException;
  * @author Martin Scharm
  */
 public abstract class FormatRecognizer {
-
+   private static Logger LOGGER = LoggerFactory.getLogger(FormatRecognizer.class);
    /**
     * identifiers.org base uri.
     */
@@ -73,21 +74,22 @@ public abstract class FormatRecognizer {
     * @param pre        the start
     * @param post       the end
     * @param defaultUri the default URI
-    * @return the URI as start+end
+    * @return the URI as pre+post
     */
    public static URI buildUri(String pre, String post, URI defaultUri) {
       try {
          return new URI(pre + post);
       } catch (URISyntaxException e) {
-         LOGGER.error("wasn't able to create URI " + pre + post);
+          LOGGER.error("wasn't able to create URI {}/{}", pre, post);
       }
       return defaultUri;
    }
 
    /**
-    * Builds an URI as `start+end` without caring about an exception. Only use if
+    * <p>
+    * Builds a URI as <code>start+end</code> without caring about an exception. Only use if
     * you're sure it's not going to fail. If we cannot produce this URI, we're
-    * returning <code>null</code>.
+    * returning <code>null</code>.</p>
     *
     * @param pre  the start
     * @param post the end
@@ -114,7 +116,7 @@ public abstract class FormatRecognizer {
     * Parses the given file and tries to determine the format, such as purl.org
     * or identifiers.org URI.
     * <p>
-    * If the recognizer is not able to understand the file it must return
+    * If the recognizer is unable to understand the file it must return
     * <code>null</code>.
     *
     * @param file     Path to the file
@@ -126,7 +128,7 @@ public abstract class FormatRecognizer {
    /**
     * Tries to map the given mime type to a format.
     * <p>
-    * If the recognizer is not able to understand the mime type it must return
+    * If the recognizer is unable to understand the mime type it must return
     * <code>null</code>.
     *
     * @param mime MIME type
@@ -137,7 +139,7 @@ public abstract class FormatRecognizer {
    /**
     * Tries to map the given file extension to a format.
     * <p>
-    * If the recognizer is not able to understand the extension it must return
+    * If the recognizer is unable to understand the extension it must return
     * <code>null</code>.
     *
     * @param extension file extension

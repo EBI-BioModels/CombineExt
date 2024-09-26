@@ -36,7 +36,7 @@ import java.util.List;
 
 
 /**
- * The Class Iconizer helps you retrieving icons for common file types.
+ * The Class Iconizer helps you to retrieve icons for common file types.
  *
  * This class holds a list of known icon collections and asks them for icons
  * given a certain format.
@@ -61,7 +61,7 @@ public class Iconizer {
 
 
    /**
-    * Adds a icon mapper to the Iconizer
+    * Adds an icon mapper to the Iconizer
     *
     * @param collection the icon collection to be added
     */

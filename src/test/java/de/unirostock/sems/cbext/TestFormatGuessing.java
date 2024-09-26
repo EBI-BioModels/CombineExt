@@ -36,6 +36,7 @@ import static org.junit.Assert.*;
 
 /**
  * @author Martin Scharm
+ * @author Tung Nguyen
  *
  */
 @RunWith(JUnitParamsRunner.class)
