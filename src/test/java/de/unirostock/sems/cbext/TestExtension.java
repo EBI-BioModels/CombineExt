@@ -103,12 +103,7 @@ public class TestExtension {
       final URI high = FormatRecognizer.buildUri("https://", "higher.priority");
 
       FormatRecognizer lowRecognizer = new FormatRecognizer() {
-         public int priority = 200;
-
-         @Override
-         public int getPriority() {
-            return priority;
-         }
+            public int priority = 200;
 
          @Override
          public URI getFormatByParsing(File file, String mimeType) {
@@ -129,15 +124,9 @@ public class TestExtension {
       class FormatRecognizerTmp extends FormatRecognizer {
          public int priority = 201;
 
-         @Override
-         public int getPriority() {
-            return priority;
+         FormatRecognizerTmp() {
+            setPriority(priority);
          }
-
-         public void setPriority(final int priority) {
-            this.priority = priority;
-         }
-
          @Override
          public URI getFormatByParsing(File file, String mimeType) {
             return high;

@@ -22,6 +22,7 @@ package de.unirostock.sems.cbext.recognizer;
 
 import de.unirostock.sems.cbext.FormatRecognizer;
 import de.unirostock.sems.cbext.Formatizer;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,6 +89,10 @@ public class SbmlRecognizer extends FormatRecognizer {
     */
    @Override
    public URI getFormatByParsing(File file, String mimeType) {
+       String extension = FilenameUtils.getExtension(file.getName());
+       if (!extension.equalsIgnoreCase("xml")) {
+           return null;
+       }
       URI result = null;
       try {
          String[] levelVersion = getSbmlLevelAndVersion(file.getAbsolutePath());
