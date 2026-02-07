@@ -146,13 +146,24 @@ public class Formatizer {
     *          the file
     * @return the format
     */
-   public static URI guessFormat(File file) {
+   public static URI guessFormat(final File file) {
+      return guessFormat(file, false);
+   }
+
+   /**
+    * Guesses the file format. It allows ignoring to parse the file when needed to speed up the process.
+    *
+    * @param file {@link File}
+    * @param ignoreFileParsing {@link Boolean}
+    * @return {@link URI}
+    */
+   public static URI guessFormat(final File file, final boolean ignoreFileParsing) {
       if (file == null || !file.isFile())
          return null;
 
       String mime = MimeTypeChecker.check(file);
       if (mime == null) {
-          LOGGER.debug("cannot guess the format of file {}", file.getName());
+         LOGGER.debug("cannot guess the format of file {}", file.getName());
          return null;
       }
       String extension = FilenameUtils.getExtension(file.getName());
@@ -167,8 +178,7 @@ public class Formatizer {
 
       URI format = null;
       for (FormatRecognizer recognizer : recognizerList) {
-         // TODO: will lift this restriction later once we complete to generate all OMEX files for the whole database
-         if (WELL_SUPPORT_FORMATS.contains(extension)) {
+         if (WELL_SUPPORT_FORMATS.contains(extension) && !ignoreFileParsing) {
             format = recognizer.getFormatByParsing(file, mime);
          }
          if (format != null)
@@ -177,12 +187,12 @@ public class Formatizer {
 
       if (format != null) {
          // found a format, do nothing
-          LOGGER.debug("found {}", format);
+         LOGGER.debug("found {}", format);
       } else {
-         // ok, parsing failed. let's still try to guess a format using file extensions or mimes.
+         // OK, parsing failed. let's still try to guess a format using file extensions or mimes.
          format = guessFormatUsingFileMimeOrExtension(file, mime);
       }
-       return format;
+      return format;
    }
 
    /**
